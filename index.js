@@ -2,6 +2,8 @@ const express = require('express');
 
 const app = express();
 
+app.use(express.json());
+
 app.get('/api/whos-there', (req, res) => {
     res.send( 'Hi Trax! This is Reut Lichtenfeld :)' )
 });
@@ -18,6 +20,12 @@ app.post('/api/contacts', (req, res) => {
     contacts.set(req.body.name, req.body);
 
     res.send(`Added new contact ${req.body.name}`);
+});
+
+app.get('/api/contacts/:contactName', (req, res) => {
+    const contact = contacts.get(req.params.contactName);
+    
+    res.send( contact );
 });
 
 //START SERVER
