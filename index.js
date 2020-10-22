@@ -14,6 +14,12 @@ app.get('/api/contacts', (req, res) => {
     res.send( contactsVal );
 });
 
+app.post('/api/contacts', (req, res) => {
+    contacts.set(req.body.name, req.body);
+
+    res.send(`Added new contact ${req.body.name}`);
+});
+
 //START SERVER
 const port = 3000;
 
