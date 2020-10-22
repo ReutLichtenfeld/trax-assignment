@@ -10,23 +10,38 @@ app.get('/api/whos-there', (req, res) => {
 
 let contacts = new Map();
 
-app.get('/api/contacts', (req, res) => {
-    let contactsVal = [];
-    contacts.forEach(val => contactsVal.push(val));
-    res.send( contactsVal );
-});
+//ROUTE HANDLERS
+const hiTrax = (req, res) => {
+    res.send( 'Hi Trax! This is Reut Lichtenfeld :)' )
+}
 
-app.post('/api/contacts', (req, res) => {
-    contacts.set(req.body.name, req.body);
+const getAllContacts = (req, res) => {
+   let contactsVal = [];
+   contacts.forEach(val => contactsVal.push(val));
+   res.send( contactsVal );
+}
 
-    res.send(`Added new contact ${req.body.name}`);
-});
+const postContact = (req, res) => {
+   contacts.set(req.body.name, req.body);
 
-app.get('/api/contacts/:contactName', (req, res) => {
-    const contact = contacts.get(req.params.contactName);
-    
-    res.send( contact );
-});
+   res.send(`Added new contact ${req.body.name}`);
+}
+
+const getContact = (req, res) => {
+   const contact = contacts.get(req.params.contactName);
+   
+   res.send( contact );
+}
+
+//ROUTS
+app.get('/api/whos-there', hiTrax);
+
+app
+   .route('/api/contacts')
+   .get(getAllContacts)
+   .post(postContact)
+
+app.get('/api/contacts/:contactName', getContact);
 
 //START SERVER
 const port = 3000;
